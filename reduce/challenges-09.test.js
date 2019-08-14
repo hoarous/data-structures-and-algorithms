@@ -223,6 +223,10 @@ const snorlaxData = {
 
 const extractStat = (statName, arr) => {
   // Solution code here...
+  return arr.reduce((acc, cur) => {
+    if(cur.stat.name === statName) return cur;
+    return acc;
+  }, null);
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -237,6 +241,12 @@ Write a function named extractChildren that, given the array of characters from 
 
 const extractChildren = (arr) => {
   // Solution code here...
+  return arr.filter(char => char.name.indexOf('a') + 1).reduce((acc, cur) =>{
+    if(cur.children){
+      cur.children.forEach(child => acc.push(child));
+    }
+    return acc;
+  }, []);
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -292,7 +302,7 @@ describe('Testing challenge 7', () => {
   });
 });
 
-xdescribe('Testing challenge 8', () => {
+describe('Testing challenge 8', () => {
   test('It should return an array containing the names of the children', () => {
     expect(extractChildren(characters)).toStrictEqual([ 'Robb', 'Sansa', 'Arya', 'Bran', 'Rickon', 'Drogon', 'Rhaegal', 'Viserion', 'Margaery', 'Loras' ]);
     expect(extractChildren(characters).length).toStrictEqual(10);
