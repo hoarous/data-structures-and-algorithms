@@ -51,7 +51,7 @@ For example, [ [0,2,5,4], [2,4,10], [] ] should return [ [1, 32], [1024], [] ].
 
 const divisibleByFiveTwoToThePower = (input) => {
   // Solution code here...
-  return input.filter(val => Number.isInteger(val)&&!val%5).map(num => Math.pow(2,num));
+  return input.map(arr => arr.filter(val => (typeof(val) === 'number' && !(val%5))).map(num => Math.pow(2,num)));
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -118,6 +118,12 @@ let starWarsData = [{
 
 let findMaleAndFemale = (data) => {
   // Solution code here...
+  return data.filter(character => character.gender === 'male' || character.gender ==='female').reduce((acc, val) => {
+    if(acc){
+      acc += ' and ';
+    }
+    return acc + val.name;
+  }, '');
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -128,6 +134,10 @@ Write a function named findShortest that, given the Star Wars data from Challeng
 
 let findShortest = (data) => {
   // Solution code here...
+  return data.reduce((shortest, character) => {
+    if(parseInt(shortest.height)>parseInt(character.height))return character;
+    return shortest;
+  }).name;
 };
 
 /* ------------------------------------------------------------------------------------------------
@@ -175,14 +185,14 @@ describe('Testing challenge 3', () => {
   });
 });
 
-xdescribe('Testing challenge 4', () => {
+describe('Testing challenge 4', () => {
   test('It should return only characters that are male or female', () => {
     expect(findMaleAndFemale(starWarsData)).toStrictEqual('Luke Skywalker and Darth Vader and Leia Organa');
     expect(findMaleAndFemale([{ name: 'person', gender: 'female' }, { gender: 'lol' }, { name: 'persontwo', gender: 'male' }])).toStrictEqual('person and persontwo');
   });
 });
 
-xdescribe('Testing challenge 5', () => {
+describe('Testing challenge 5', () => {
   test('It should return the name of the shortest character', () => {
     expect(findShortest(starWarsData)).toStrictEqual('R2-D2');
   });
